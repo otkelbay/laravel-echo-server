@@ -1,6 +1,7 @@
-import { PresenceChannel } from './presence-channel';
-import { PrivateChannel } from './private-channel';
-import { Log } from './../log';
+import {PresenceChannel} from './presence-channel';
+import {PrivateChannel} from './private-channel';
+import {Log} from './../log';
+import axios from 'axios';
 
 export class Channel {
     /**
@@ -80,9 +81,19 @@ export class Channel {
             }
 
             socket.leave(channel);
-
             if (this.options.devMode) {
+                let tokens = channel.split('.');
+                let callId = tokens[tokens.length - 1];
                 Log.info(`[${new Date().toLocaleTimeString()}] - ${socket.id} left channel: ${channel} (${reason})`);
+                axios.post('127.0.0.1/api/call-finished', {
+                    call_id: callId,
+                    password: 'les1'
+                }).then((res) => {
+                    Log.info(res.data);
+                    console.log(res.data);
+                }).catch((err) => {
+                    Log.error(err);
+                });
             }
         }
     }
@@ -112,7 +123,8 @@ export class Channel {
                 var member = res.channel_data;
                 try {
                     member = JSON.parse(res.channel_data);
-                } catch (e) { }
+                } catch (e) {
+                }
 
                 this.presence.join(socket, data.channel, member);
             }

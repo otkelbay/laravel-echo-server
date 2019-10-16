@@ -1,11 +1,12 @@
-import { HttpSubscriber, RedisSubscriber, Subscriber } from './subscribers';
-import { Channel } from './channels';
-import { Server } from './server';
-import { HttpApi } from './api';
-import { Log } from './log';
+import {HttpSubscriber, RedisSubscriber, Subscriber} from './subscribers';
+import {Channel} from './channels';
+import {Server} from './server';
+import {HttpApi} from './api';
+import {Log} from './log';
 import * as fs from 'fs';
+
 const packageFile = require('../package.json');
-const { constants } = require('crypto');
+const {constants} = require('crypto');
 
 /**
  * Echo server class.
@@ -75,7 +76,8 @@ export class EchoServer {
     /**
      * Create a new instance.
      */
-    constructor() { }
+    constructor() {
+    }
 
     /**
      * Start the Echo Server.
