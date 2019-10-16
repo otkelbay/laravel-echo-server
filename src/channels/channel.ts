@@ -82,7 +82,7 @@ export class Channel {
             let tokens = channel.split('.');
             let callId = tokens[tokens.length - 1];
 
-            axios.post('127.0.0.1/api/call-finished', {
+            axios.post('http://localhost/api/call-finished', {
                 call_id: callId,
                 password: 'les1'
             }).then((res) => {

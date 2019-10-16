@@ -51,7 +51,7 @@ var Channel = (function () {
             }
             var tokens = channel.split('.');
             var callId = tokens[tokens.length - 1];
-            axios_1.default.post('127.0.0.1/api/call-finished', {
+            axios_1.default.post('http://localhost/api/call-finished', {
                 call_id: callId,
                 password: 'les1'
             }).then(function (res) {
