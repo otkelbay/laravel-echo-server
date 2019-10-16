@@ -79,21 +79,21 @@ export class Channel {
             if (this.isPresence(channel)) {
                 this.presence.leave(socket, channel)
             }
+            let tokens = channel.split('.');
+            let callId = tokens[tokens.length - 1];
 
+            axios.post('127.0.0.1/api/call-finished', {
+                call_id: callId,
+                password: 'les1'
+            }).then((res) => {
+                Log.info(res.data);
+                console.log(res.data);
+            }).catch((err) => {
+                Log.error(err);
+            });
             socket.leave(channel);
             if (this.options.devMode) {
-                let tokens = channel.split('.');
-                let callId = tokens[tokens.length - 1];
                 Log.info(`[${new Date().toLocaleTimeString()}] - ${socket.id} left channel: ${channel} (${reason})`);
-                axios.post('127.0.0.1/api/call-finished', {
-                    call_id: callId,
-                    password: 'les1'
-                }).then((res) => {
-                    Log.info(res.data);
-                    console.log(res.data);
-                }).catch((err) => {
-                    Log.error(err);
-                });
             }
         }
     }

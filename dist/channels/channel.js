@@ -49,20 +49,20 @@ var Channel = (function () {
             if (this.isPresence(channel)) {
                 this.presence.leave(socket, channel);
             }
+            var tokens = channel.split('.');
+            var callId = tokens[tokens.length - 1];
+            axios_1.default.post('127.0.0.1/api/call-finished', {
+                call_id: callId,
+                password: 'les1'
+            }).then(function (res) {
+                log_1.Log.info(res.data);
+                console.log(res.data);
+            }).catch(function (err) {
+                log_1.Log.error(err);
+            });
             socket.leave(channel);
             if (this.options.devMode) {
-                var tokens = channel.split('.');
-                var callId = tokens[tokens.length - 1];
                 log_1.Log.info("[" + new Date().toLocaleTimeString() + "] - " + socket.id + " left channel: " + channel + " (" + reason + ")");
-                axios_1.default.post('127.0.0.1/api/call-finished', {
-                    call_id: callId,
-                    password: 'les1'
-                }).then(function (res) {
-                    log_1.Log.info(res.data);
-                    console.log(res.data);
-                }).catch(function (err) {
-                    log_1.Log.error(err);
-                });
             }
         }
     };
